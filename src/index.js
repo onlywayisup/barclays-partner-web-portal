@@ -11,8 +11,8 @@ window.onload = async () => {
         .addEventListener("click", () => startRegistration());
 
     document
-        .getElementById("invitation-button")
-        .addEventListener("click", () => startInvitation());
+        .getElementById("delegated-admin-button")
+        .addEventListener("click", () => startDelegatedAdmin());
 
     document
         .getElementById("username")
@@ -38,45 +38,6 @@ async function startProfileUpdate() {
     );
 }
 
-async function startDeposit() {
-    console.log("startDeposit for user " + idTokenClaims.username);
-    showSpinner();
-    await getToken();
-    let parameters = {
-        sessionId: application_session_id,
-        stToken: window["_securedTouchToken"],
-        userName: idTokenClaims.username,
-    };
-
-    showWidget(
-        dav_props.trxPolicyId,
-        inSessionCallback,
-        errorCallback,
-        onCloseModal,
-        parameters
-    );
-}
-
-async function startBuy() {
-    console.log("startBuy for user " + idTokenClaims.username);
-    let amount = document.getElementById("btc-amount").value;
-    showSpinner();
-    await getToken();
-    let parameters = {
-        sessionId: application_session_id,
-        userName: idTokenClaims.username,
-        amount: amount,
-        currency: "BTC",
-    };
-
-    showWidget(
-        dav_props.buyPolicyId,
-        inSessionCallback,
-        errorCallback,
-        onCloseModal,
-        parameters
-    );
-}
 
 async function startRegistration() {
     console.log("startRegistration");
@@ -92,13 +53,13 @@ async function startRegistration() {
     );
 }
 
-async function startInvitation() {
-    console.log("startInvitation");
+async function startDelegatedAdmin() {
+    console.log("startDelegatedAdmin");
     let parameters = {};
     showSpinner();
     await getToken();
     showWidget(
-        dav_props.invitationPolicyId,
+        dav_props.delegatedAdminPolicyId,
         initSessionCallback,
         errorCallback,
         onCloseModal,
@@ -161,20 +122,20 @@ function updateUI(isUserAuthenticated) {
         document.getElementById("username").innerText =
             getDisplayName(idTokenClaims);
         hideElement("login-button");
-        hideElement("invitation-button");
         hideElement("register-button");
         hideElement("landing");
         displayElement("username");
         displayElement("logout");
         displayElement("home");
+        displayElement("delegated-admin-button");
     } else {
         displayElement("login-button");
-        displayElement("invitation-button");
         displayElement("register-button");
         displayElement("landing");
         hideElement("username");
         hideElement("logout");
         hideElement("home");
+        hideElement("delegated-admin-button");
     }
 }
 
