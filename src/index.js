@@ -109,7 +109,7 @@ function updateUI(isUserAuthenticated) {
         displayElement("username");
         displayElement("logout");
         displayElement("home");
-        if (idTokenClaims.userAdmin) {
+        if (idTokenClaims.userAdmin === "true") {
             displayElement("delegated-admin-button");
         }
     } else {
