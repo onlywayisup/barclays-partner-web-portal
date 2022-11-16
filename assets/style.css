@@ -151,7 +151,7 @@ input {
 }
 
 .dav-body {
-  min-height: 500px;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
   gap: 20px;

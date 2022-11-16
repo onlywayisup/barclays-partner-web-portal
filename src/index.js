@@ -14,29 +14,11 @@ window.onload = async () => {
         .getElementById("delegated-admin-button")
         .addEventListener("click", () => startDelegatedAdmin());
 
-    document
-        .getElementById("username")
-        .addEventListener("click", () => startProfileUpdate());
+
     document.getElementById("logout").addEventListener("click", () => logout());
 
     skWidget = document.getElementsByClassName("skWidget")[0];
 };
-
-async function startProfileUpdate() {
-    console.log("startProfileUpdate for user " + idTokenClaims.username);
-    showSpinner();
-    await getToken();
-    let parameters = {
-        username: idTokenClaims.username,
-    };
-    showWidget(
-        dav_props.preferencesPolicyId,
-        inSessionCallback,
-        errorCallback,
-        onCloseModal,
-        parameters
-    );
-}
 
 
 async function startRegistration() {
@@ -127,7 +109,9 @@ function updateUI(isUserAuthenticated) {
         displayElement("username");
         displayElement("logout");
         displayElement("home");
-        displayElement("delegated-admin-button");
+        if (idTokenClaims.userAdmin) {
+            displayElement("delegated-admin-button");
+        }
     } else {
         displayElement("login-button");
         displayElement("register-button");
